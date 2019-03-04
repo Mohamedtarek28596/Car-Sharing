@@ -26,54 +26,54 @@
                 android:text="Mohamed"
                 android:textSize="24sp" />
 
-     <TextView
-        android:id="@+id/t2"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-         android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/t3"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-        android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t3"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/t4"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-        android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t4"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/t5"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-        android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t5"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/t6"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-        android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t6"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/t7"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-        android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t7"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/t8"
-        android:layout_width="345dp"
-        android:layout_height="54dp"
-        android:text="Mohamed"
-        android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/t8"
+                android:layout_width="345dp"
+                android:layout_height="54dp"
+                android:text="Mohamed"
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/t9"

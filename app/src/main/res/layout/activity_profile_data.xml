@@ -47,16 +47,17 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <EditText
+        android:id="@+id/uFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
         android:layout_marginTop="20dp"
-        android:id="@+id/uFirstName"
-        android:hint="First Name" />
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/buttonSave"
@@ -72,51 +73,55 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="16dp"
         android:id="@+id/uLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/uFirstName"
-        android:layout_alignLeft="@+id/uFirstName"
         android:layout_alignStart="@+id/uFirstName"
-        android:hint="Last Name" />
+        android:layout_alignLeft="@+id/uFirstName"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:singleLine="true" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
         android:id="@+id/uAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/uLastName"
-        android:layout_alignLeft="@+id/uLastName"
         android:layout_alignStart="@+id/uLastName"
+        android:layout_alignLeft="@+id/uLastName"
         android:layout_marginTop="12dp"
-        android:hint="Age" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Age"
         android:inputType="phone"
-        android:ems="10"
-        android:id="@+id/phoneNumber"
-        android:hint="Phone Number "
-        android:layout_below="@+id/uAge"
-        android:layout_alignLeft="@+id/uAge"
-        android:layout_alignStart="@+id/uAge" />
+        android:singleLine="true" />
 
     <EditText
+        android:id="@+id/phoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:layout_below="@+id/uAge"
+        android:layout_alignStart="@+id/uAge"
+        android:layout_alignLeft="@+id/uAge"
         android:ems="10"
-        android:layout_marginTop="11dp"
+        android:hint="Phone Number "
+        android:inputType="phone"
+        android:singleLine="true" />
+
+    <EditText
         android:id="@+id/uTrustedEmail"
-        android:hint="Trusted Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/phoneNumber"
+        android:layout_alignStart="@+id/phoneNumber"
         android:layout_alignLeft="@+id/phoneNumber"
-        android:layout_alignStart="@+id/phoneNumber" />
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:hint="Trusted Email"
+        android:inputType="textEmailAddress"
+        android:singleLine="true" />
 
 
 </RelativeLayout>

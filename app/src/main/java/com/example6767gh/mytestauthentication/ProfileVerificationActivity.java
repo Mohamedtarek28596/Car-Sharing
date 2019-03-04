@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -130,7 +131,7 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
 
                 //TODO: Start here
                 mGraphicOverlay.clear();
-                showToast("start Detect");
+
                 mSelectedImage = bitmap;
                 if (mSelectedImage != null) {
                     // Get the dimensions of the View
@@ -162,7 +163,7 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
     }
 
     private void runCloudTextRecognition() {
-        showToast("Text start");
+
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(mSelectedImage);
         FirebaseVisionDocumentTextRecognizer recognizer = FirebaseVision.getInstance()
                 .getCloudDocumentTextRecognizer();
@@ -171,7 +172,7 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
                         new OnSuccessListener<FirebaseVisionDocumentText>() {
                             @Override
                             public void onSuccess(FirebaseVisionDocumentText texts) {
-                                showToast("Pass");
+
                                 processCloudTextRecognitionResult(texts);
                             }
                         })
@@ -179,7 +180,7 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                showToast("Failed");
+
                                 // Task failed with an exception
                                 e.printStackTrace();
                             }
@@ -194,7 +195,7 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
     List<String> wordsRead = new ArrayList<>();
     private void processCloudTextRecognitionResult(FirebaseVisionDocumentText text) {
         // Task completed successfully
-        showToast("In here");
+
         if (text == null) {
             showToast("No text found");
             return;
@@ -214,12 +215,22 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
                 for (FirebaseVisionDocumentText.Word word : words){
                     wordsRead.add(word.getText());
                 }
-                showToast(wordsRead.toString());
+ /*               ArrayList<String> ar = new ArrayList<String>();
+                ar.add(wordsRead.toString());
+                showToast(ar.get(0));*/
+
+                String x = wordsRead.toString();
+                String[] arr = wordList(x);
+                showToast(arr[0]);
+
 
             }
         }
     }
 
+    public static String[] wordList(String line){
+        return line.split(" ");
+    }
 
 
     //  selects image of the user

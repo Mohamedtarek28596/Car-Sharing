@@ -24,20 +24,20 @@
     <include layout="@layout/content_home" />
 
     <!--<ImageView-->
-        <!--android:id="@+id/imageView7"-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="80dp"-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:layout_marginTop="70dp" />-->
+    <!--android:id="@+id/imageView7"-->
+    <!--android:layout_width="80dp"-->
+    <!--android:layout_height="80dp"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_marginTop="70dp" />-->
 
 
     <!--<TextView-->
-        <!--android:id="@+id/textView3"-->
-        <!--android:layout_width="203dp"-->
-        <!--android:layout_height="135dp"-->
-        <!--android:layout_marginLeft="130dp"-->
-        <!--android:layout_marginTop="100dp"-->
-        <!--android:ellipsize="marquee"-->
-        <!--android:text="TextView" />-->
+    <!--android:id="@+id/textView3"-->
+    <!--android:layout_width="203dp"-->
+    <!--android:layout_height="135dp"-->
+    <!--android:layout_marginLeft="130dp"-->
+    <!--android:layout_marginTop="100dp"-->
+    <!--android:ellipsize="marquee"-->
+    <!--android:text="TextView" />-->
 
 </android.support.design.widget.CoordinatorLayout>

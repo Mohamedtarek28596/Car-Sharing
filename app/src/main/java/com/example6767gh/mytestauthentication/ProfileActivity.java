@@ -144,7 +144,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         });
                     }
                 });
-
            }*/
 
 
@@ -272,7 +271,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ButtonNext:
 
                 finish();
-                startActivity(new Intent(this, ProfileVerificationActivity.class));
+                startActivity(new Intent(this, ProfileVerificationActivity
+                        .class));
                 break;
 
             case R.id.buttonSave:

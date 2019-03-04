@@ -78,7 +78,7 @@ public class ProfileInfo  extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 ImagesUrl userProfile = dataSnapshot.child(id).getValue(ImagesUrl.class);
-                Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
+
 
 
                 Log.i("url", String.valueOf(userProfile.getuImageUrl()));

@@ -96,7 +96,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 ImagesUrl userProfile = dataSnapshot.child(id).getValue(ImagesUrl.class);
-                Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
+
 
                 StorageReference profileImageRef =
                         FirebaseStorage.getInstance().getReference().child("profilepics/").child(String.valueOf(userProfile.getuImageUrl()));

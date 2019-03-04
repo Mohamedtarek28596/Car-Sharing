@@ -44,6 +44,13 @@ public class Home extends AppCompatActivity
     TextView tit1;
     TextView tit2;
     TextView tit3;
+    TextView c1;
+    TextView c2;
+    TextView c3;
+    TextView d1;
+    TextView d2;
+    TextView d3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,12 @@ public class Home extends AppCompatActivity
         tit1 = v1.findViewById(R.id.name);
         tit2 = v2.findViewById(R.id.name);
         tit3 = v3.findViewById(R.id.name);
+        c1= v1.findViewById(R.id.color);
+        c2 = v2.findViewById(R.id.color);
+        c3 = v3.findViewById(R.id.color);
+        d1 = v1.findViewById(R.id.dist);
+        d2 = v2.findViewById(R.id.dist);
+        d3 = v3.findViewById(R.id.dist);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -80,14 +93,21 @@ public class Home extends AppCompatActivity
                 Picasso.with(getApplication()).load(trial)
                         .into(img1);
                 tit1.setText( carsInformation.getType());
+                c1.setText(carsInformation.getColor());
+                d1.setText(carsInformation.getNumber());
+
 
                 Picasso.with(getApplication()).load(trial)
                         .into(img2);
                 tit2.setText( carsInformation.getType());
+                c2.setText(carsInformation.getColor());
+                d2.setText(carsInformation.getNumber());
 
                 Picasso.with(getApplication()).load(trial)
                         .into(img3);
                 tit3.setText( carsInformation.getType());
+                c3.setText(carsInformation.getColor());
+                d3.setText(carsInformation.getNumber());
             }
 
 
@@ -174,6 +194,8 @@ public class Home extends AppCompatActivity
             startActivity(new Intent(this, About.class));
 
         } else if (id == R.id.nav_contact) {
+            finish();
+            startActivity(new Intent(this, ContactUs.class));
 
         }
 

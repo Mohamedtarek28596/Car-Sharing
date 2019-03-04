@@ -23,42 +23,6 @@
         android:visibility="gone" />
 
 
-
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/editTextPassword"
-        android:textCursorDrawable="@drawable/courser"
-        android:backgroundTint="@color/colorPrimary"
-        android:drawableLeft="@drawable/password"
-        android:drawablePadding="10dp"
-        android:hint="Password"
-        android:alpha="1"
-        android:textSize="26sp"
-        android:textColor="?android:attr/textColorPrimaryInverse"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
-        android:layout_marginBottom="12dp"
-        android:layout_above="@+id/buttonLogin"
-        android:layout_alignLeft="@+id/editTextEmail"
-        android:layout_alignStart="@+id/editTextEmail" />
-
-    <TextView
-        android:text="Be your own DRIVER "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView9"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="36sp"
-        tools:textStyle="bold|italic"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/progressbar"
-        android:layout_centerHorizontal="true" />
-
-
-
-
     <Button
         android:text="new account "
         android:layout_width="match_parent"
@@ -113,6 +77,26 @@
         android:textColorLink="@color/ll"
         android:textSize="26dp" />
 
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPassword"
+        android:textCursorDrawable="@drawable/courser"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawableLeft="@drawable/password"
+        android:drawablePadding="10dp"
+        android:hint="Password"
+        android:alpha="1"
+        android:textSize="26sp"
+        android:textColor="?android:attr/textColorPrimaryInverse"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/buttonLogin"
+        android:layout_alignLeft="@+id/editTextEmail"
+        android:layout_alignStart="@+id/editTextEmail" />
 
 
 
