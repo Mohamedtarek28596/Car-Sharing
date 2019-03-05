@@ -52,6 +52,8 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
     Button Btn;
     private GraphicOverlay mGraphicOverlay;
     private Bitmap mSelectedImage;
+    private String sid, nameEng;
+    private String[] date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,8 +193,6 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
-
-    List<String> wordsRead = new ArrayList<>();
     private void processCloudTextRecognitionResult(FirebaseVisionDocumentText text) {
         // Task completed successfully
 
@@ -205,6 +205,13 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
         for (int i = 0; i < blocks.size(); i++) {
             List<FirebaseVisionDocumentText.Paragraph> paragraphs = blocks.get(i).getParagraphs();
             for (int j = 0; j < paragraphs.size(); j++) {
+                //Log.i("elec", paragraphs.get(0).getText());
+                    if (i == 2)
+                        sid = paragraphs.get(0).getText();
+                    else if(i == 3)
+                        nameEng = paragraphs.get(0).getText();
+                    else if (i == 8)
+                        date = arabicToDecimal(paragraphs.get(0).getText().replace('۶','٤').replaceAll("[\n]", "").split("/"));
                 List<FirebaseVisionDocumentText.Word> words = paragraphs.get(j).getWords();
                 for (int l = 0; l < words.size(); l++) {
                     CloudTextGraphic cloudDocumentTextGraphic = new CloudTextGraphic(mGraphicOverlay,
@@ -212,24 +219,38 @@ public class ProfileVerificationActivity extends AppCompatActivity implements Vi
                     mGraphicOverlay.add(cloudDocumentTextGraphic);
 
                 }
-                for (FirebaseVisionDocumentText.Word word : words){
-                    wordsRead.add(word.getText());
-                }
  /*               ArrayList<String> ar = new ArrayList<String>();
                 ar.add(wordsRead.toString());
                 showToast(ar.get(0));*/
 
-                String x = wordsRead.toString();
-                String[] arr = wordList(x);
-                showToast(arr[0]);
+//                for (String x : wordsRead)
+//                    showToast(x);
 
 
             }
         }
+        Log.i("elec", sid + " " + nameEng + " " + date[0] + "/"+date[1]+"/"+date[2]);
+        //Log.i("elec",wordsRead.get(14));
+        //Log.i("elec",wordsRead.get(15) + " " + wordsRead.get(16) + " " + wordsRead.get(17) + " "+ wordsRead.get(18));
+        //Log.i("elec",wordsRead.get(37) + " " + wordsRead.get(38) + " " + wordsRead.get(39) + " "+ wordsRead.get(40) + " " + wordsRead.get(41));
     }
 
-    public static String[] wordList(String line){
-        return line.split(" ");
+    private String[] arabicToDecimal(String[] numbers) {
+        String[] res = new String[numbers.length];
+        for (int j = 0; j < numbers.length; j++) {
+            char[] chars = new char[numbers[j].length()];
+            for (int i = 0; i < numbers[j].length(); i++) {
+                char ch = numbers[j].charAt(i);
+                if (ch >= 0x0660 && ch <= 0x0669)
+                    ch -= 0x0660 - '0';
+                else if (ch >= 0x06f0 && ch <= 0x06F9)
+                    ch -= 0x06f0 - '0';
+                chars[i] = ch;
+            }
+            res[j] = new String(chars);
+        }
+
+        return res;
     }
 
 

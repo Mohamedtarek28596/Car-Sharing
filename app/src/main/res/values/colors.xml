@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#F88520</color>
     <color name="colorPrimaryDark">#FF911B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FF911B</color>
     <color name="ll">#FF9800</color>
     <color name="texBackgroundColor">#33000000</color>
 </resources>

@@ -1,9 +1,17 @@
 package com.example6767gh.mytestauthentication;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,10 +37,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     FirebaseDatabase firebaseDatabase;
     View v1;
@@ -51,6 +59,10 @@ public class Home extends AppCompatActivity
     TextView d2;
     TextView d3;
 
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected double myLat = 0;
+    protected double myLong = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +77,36 @@ public class Home extends AppCompatActivity
         tit1 = v1.findViewById(R.id.name);
         tit2 = v2.findViewById(R.id.name);
         tit3 = v3.findViewById(R.id.name);
-        c1= v1.findViewById(R.id.color);
+        c1 = v1.findViewById(R.id.color);
         c2 = v2.findViewById(R.id.color);
         c3 = v3.findViewById(R.id.color);
         d1 = v1.findViewById(R.id.dist);
         d2 = v2.findViewById(R.id.dist);
         d3 = v3.findViewById(R.id.dist);
 
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                    0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        } catch (Exception io) {
+            io.printStackTrace();
+        }
+
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Cars");
+
 
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -82,32 +114,78 @@ public class Home extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Cars carsInformation = dataSnapshot.child("123").getValue(Cars.class);
+                ArrayList<Cars> allCars = new ArrayList<>();
+
+                for(DataSnapshot carData : dataSnapshot.getChildren()){
+
+                    Cars carsInformation = carData.getValue(Cars.class);
+
+                    allCars.add(carsInformation);
+                }
+
+                int firstmin = Integer.MAX_VALUE;
+                int secmin = Integer.MAX_VALUE;
+                int thirdmin = Integer.MAX_VALUE;
+                int firstminIndex = 0;
+                int secminIndex = 0;
+                int thirdminIndex = 0;
+                for (int i = 0; i < allCars.size(); i++)
+                {
+                /* Check if current element is less than
+                firstmin, then update first, second and
+                third */
+                double dist = distance(Double.valueOf(allCars.get(i).getLatitude()), myLat,Double.valueOf(allCars.get(i).getLongitude()), myLong,0.0,0.0);
+                    if (((int)dist) < firstmin)
+                    {
+                        thirdmin = secmin;
+                        secmin = firstmin;
+                        firstmin = (int)dist;
+                        firstminIndex = i;
+                    }
+
+                /* Check if current element is less than
+                secmin then update second and third */
+                    else if (((int)dist) < secmin)
+                    {
+                        thirdmin = secmin;
+                        secmin = ((int)dist);
+                        secminIndex = i;
+                    }
+
+                /* Check if current element is less than
+                then update third */
+                    else if (((int)dist) < thirdmin) {
+                        thirdmin = ((int) dist);
+                        thirdminIndex = i;
+                    }
+                }
 
 
                 StorageReference profileImageRef =
-                        FirebaseStorage.getInstance().getReference().child("cars/").child(String.valueOf(carsInformation.getImage()));
+                        FirebaseStorage.getInstance().getReference().child("cars/").child(String.valueOf(allCars.get(firstminIndex).getImage()));
 
-                String trial = carsInformation.getImage();
+                String trial1 = allCars.get(firstminIndex).getImage();
+                String trial2 = allCars.get(secminIndex).getImage();
+                String trial3 = allCars.get(thirdminIndex).getImage();
 
-                Picasso.with(getApplication()).load(trial)
+                Picasso.with(getApplication()).load(trial1)
                         .into(img1);
-                tit1.setText( carsInformation.getType());
-                c1.setText(carsInformation.getColor());
-                d1.setText(carsInformation.getNumber());
+                tit1.setText( allCars.get(firstminIndex).getType());
+                c1.setText(allCars.get(firstminIndex).getColor());
+                d1.setText(allCars.get(firstminIndex).getNumber());
 
 
-                Picasso.with(getApplication()).load(trial)
+                Picasso.with(getApplication()).load(trial2)
                         .into(img2);
-                tit2.setText( carsInformation.getType());
-                c2.setText(carsInformation.getColor());
-                d2.setText(carsInformation.getNumber());
+                tit2.setText( allCars.get(secminIndex).getType());
+                c2.setText(allCars.get(secminIndex).getColor());
+                d2.setText(allCars.get(secminIndex).getNumber());
 
-                Picasso.with(getApplication()).load(trial)
+                Picasso.with(getApplication()).load(trial3)
                         .into(img3);
-                tit3.setText( carsInformation.getType());
-                c3.setText(carsInformation.getColor());
-                d3.setText(carsInformation.getNumber());
+                tit3.setText( allCars.get(thirdminIndex).getType());
+                c3.setText(allCars.get(thirdminIndex).getColor());
+                d3.setText(allCars.get(thirdminIndex).getNumber());
             }
 
 
@@ -185,16 +263,12 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_notifications) {
 
         } else if (id == R.id.nav_history) {
-            finish();
             startActivity(new Intent(this, History.class));
 
         } else if (id == R.id.nav_about) {
-
-            finish();
             startActivity(new Intent(this, About.class));
 
         } else if (id == R.id.nav_contact) {
-            finish();
             startActivity(new Intent(this, ContactUs.class));
 
         }
@@ -212,4 +286,58 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private double distance(double lat1, double lat2, double lon1,
+                                  double lon2, double el1, double el2) {
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        myLat = location.getLatitude();
+        myLong = location.getLongitude();
+        //Log.i("elec", myLat + " , " + myLong);
+        Toast.makeText(this, myLat + " " + myLong, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.d("Latitude","disable");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.d("Latitude","enable");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d("Latitude","status");
+    }
 }
+/*
+ArrayList<String> permissions=new ArrayList<>();
+PermissionUtils permissionUtils;
+
+permissionUtils=new PermissionUtils(MyLocationUsingLocationAPI.this);
+
+permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
+ */

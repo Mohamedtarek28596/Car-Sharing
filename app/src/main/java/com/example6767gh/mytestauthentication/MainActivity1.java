@@ -22,7 +22,6 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
 
     FirebaseAuth mAuth;
     EditText editTextEmail, editTextPassword;
-    ProgressBar progressBar;
 
 
 
@@ -30,13 +29,13 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+        setTitle("Login Page");
 
 
         mAuth = FirebaseAuth.getInstance();
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         findViewById(R.id.textViewSignup).setOnClickListener(this); // sign up  button change activity
         findViewById(R.id.buttonLogin).setOnClickListener(this);    // login in 1st activity
@@ -80,7 +79,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        Utils.showLoading(this);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
@@ -88,7 +87,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                progressBar.setVisibility(View.GONE);
+                Utils.hideLoading();
                 if (task.isSuccessful()) {
                     finish();
 
@@ -109,14 +108,20 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.textViewSignup:
-                finish();
                 startActivity(new Intent(this, MainActivity2.class));
+                finish();
                 break;
 
             case R.id.buttonLogin:
                 userLogin();          //login method
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utils.hideLoading();
     }
 }
 
