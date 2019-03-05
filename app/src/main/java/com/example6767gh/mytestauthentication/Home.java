@@ -266,7 +266,7 @@ public class Home extends AppCompatActivity
             startActivity(new Intent(this, History.class));
 
         } else if (id == R.id.nav_about) {
-            startActivity(new Intent(this, About.class));
+            startActivity(new Intent(this, MapsActivity.class));
 
         } else if (id == R.id.nav_contact) {
             startActivity(new Intent(this, ContactUs.class));
@@ -312,7 +312,7 @@ public class Home extends AppCompatActivity
         myLat = location.getLatitude();
         myLong = location.getLongitude();
         //Log.i("elec", myLat + " , " + myLong);
-        Toast.makeText(this, myLat + " " + myLong, Toast.LENGTH_SHORT).show();
+ //       Toast.makeText(this, myLat + " " + myLong, Toast.LENGTH_SHORT).show();
     }
 
     @Override

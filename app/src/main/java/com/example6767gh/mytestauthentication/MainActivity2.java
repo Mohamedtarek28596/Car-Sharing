@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity2 extends AppCompatActivity  implements View.OnClickListener  {
 
-    ProgressBar progressBar;
+
     EditText editTextEmail, editTextPassword;
 
     private FirebaseAuth mAuth;
@@ -39,7 +39,7 @@ public class MainActivity2 extends AppCompatActivity  implements View.OnClickLis
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -87,7 +87,7 @@ public class MainActivity2 extends AppCompatActivity  implements View.OnClickLis
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        Utils.showLoading(this);
 // when the registration is done
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
@@ -97,7 +97,7 @@ public class MainActivity2 extends AppCompatActivity  implements View.OnClickLis
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                progressBar.setVisibility(View.GONE);
+                Utils.hideLoading();
                 if (task.isSuccessful()) {
 
                     FirebaseUser test = FirebaseAuth.getInstance().getCurrentUser();
@@ -138,6 +138,11 @@ public class MainActivity2 extends AppCompatActivity  implements View.OnClickLis
                 startActivity(new Intent(this, MainActivity1.class));
                 break;
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utils.hideLoading();
     }
 }
 

@@ -52,7 +52,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage firebaseStorage;
     FirebaseAuth mAuth;
-    ProgressBar progressBar;
+
 
     String profileImageUrl;
 
@@ -81,7 +81,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         profileEmail1 = (TextView) findViewById(R.id.tvProfileEmail1);
         ivNumber=(TextView) findViewById(R.id.ivNumber);
         findViewById(R.id.btnProfileUpdate).setOnClickListener(this);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar2);
+
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser test = FirebaseAuth.getInstance().getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -236,13 +236,13 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         // system.currenttimemillis , provide unique name
         // 3andy image
         if (uriProfileImage != null) {
-            progressBar.setVisibility(View.VISIBLE);
+            Utils.showLoading(this);
             profileImageRef.putFile(uriProfileImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         // check uplod successful or not
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressBar.setVisibility(View.GONE);
+                            Utils.hideLoading();
                             profileImageUrl1 = taskSnapshot.getDownloadUrl().toString(); // get the url as user informations
 
 
@@ -251,7 +251,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.GONE);
+                            Utils.hideLoading();
                             Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -291,6 +291,12 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utils.hideLoading();
+    }
 
 
 }

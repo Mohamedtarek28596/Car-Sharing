@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
 
     Uri uriProfileImage;        //uniform resources identifier image storage
-    ProgressBar progressBar;
+
     String profileImageUrl;
 
     FirebaseAuth mAuth;
@@ -68,7 +68,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         editText = (EditText) findViewById(R.id.editTextDisplayName);
         imageView = (ImageView) findViewById(R.id.imageView);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
         //   textView = (TextView) findViewById(R.id.textViewVerified);
         findViewById(R.id.ButtonNext).setOnClickListener(this);
         Btn = (Button)findViewById(R.id.ButtonNext);
@@ -233,20 +232,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         // system.currenttimemillis , provide unique name
         // 3andy image
         if (uriProfileImage != null) {
-            progressBar.setVisibility(View.VISIBLE);
+            Utils.showLoading(this);
             profileImageRef.putFile(uriProfileImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         // check uplod successful or not
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressBar.setVisibility(View.GONE);
+                            Utils.hideLoading();
                             profileImageUrl = taskSnapshot.getDownloadUrl().toString(); // get the url as user informations
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.GONE);
+                            Utils.hideLoading();
                             Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -280,5 +279,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 break;
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utils.hideLoading();
     }
 }
