@@ -18,13 +18,13 @@ public class Utils {
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
         pDialog.show();
-        Log.i("elec","sadasda");
+
     }
 
     public static void hideLoading() {
         if (pDialog != null)
             pDialog.dismiss();
-        Log.i("elec","sadasda");
+
     }
 
 }

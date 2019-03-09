@@ -1,10 +1,6 @@
 package com.example6767gh.mytestauthentication;
 
-import android.net.Uri;
 
-/**
- * Created by Dana on 2/15/2019.
- */
 
 public class users {
 
