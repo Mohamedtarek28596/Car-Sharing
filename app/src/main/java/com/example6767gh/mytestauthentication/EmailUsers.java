@@ -1,8 +1,5 @@
 package com.example6767gh.mytestauthentication;
 
-/**
- * Created by Dana on 2/21/2019.
- */
 
 public class EmailUsers {
 

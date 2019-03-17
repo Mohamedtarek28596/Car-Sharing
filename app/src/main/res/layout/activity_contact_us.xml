@@ -35,6 +35,14 @@
             tools:layout_editor_absoluteX="110dp"
             tools:layout_editor_absoluteY="198dp" />
 
+        <Button
+            android:id="@+id/emailbtn"
+            android:layout_width="98dp"
+            android:layout_height="103dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:background="@drawable/mail"
+            tools:layout_editor_absoluteX="110dp"
+            tools:layout_editor_absoluteY="198dp" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
