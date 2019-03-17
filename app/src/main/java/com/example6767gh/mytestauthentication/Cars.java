@@ -1,7 +1,9 @@
 package com.example6767gh.mytestauthentication;
 
 
-public class Cars {
+import java.io.Serializable;
+
+public class Cars implements Serializable {
 
     private String color;
     private String type;

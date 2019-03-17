@@ -53,17 +53,20 @@ public class History extends AppCompatActivity {
                 allTrips.add(tripsHistory);
 
             }
+
+           for (int j = 0; j<allTrips.size(); j++)
+           {
+               String startTrip = allTrips.get(j).getStart();
+               mContact.add(startTrip);
+           }
+           mAdapter.notifyDataSetChanged();
         }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(History.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
-        
-       for (int j = 0; j<allTrips.size(); j++)
-        {
-            String startTrip = allTrips.get(j).getStart();
-            mContact.add(startTrip);
-        }
+
+
     }
 }

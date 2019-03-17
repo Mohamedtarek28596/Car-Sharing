@@ -58,6 +58,7 @@ public class Home extends AppCompatActivity
     TextView d1;
     TextView d2;
     TextView d3;
+    ArrayList<Cars> allCars = new ArrayList<>();
 
     protected LocationManager locationManager;
     protected LocationListener locationListener;
@@ -71,6 +72,26 @@ public class Home extends AppCompatActivity
         v1 = findViewById(R.id.f1);
         v2 = findViewById(R.id.f2);
         v3 = findViewById(R.id.f3);
+        v1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMap(allCars.get(0));
+            }
+        });
+
+        v2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMap(allCars.get(1));
+            }
+        });
+
+        v3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMap(allCars.get(2));
+            }
+        });
         img1 = v1.findViewById(R.id.ivProfilePic);
         img2 = v2.findViewById(R.id.ivProfilePic);
         img3 = v3.findViewById(R.id.ivProfilePic);
@@ -113,8 +134,6 @@ public class Home extends AppCompatActivity
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                ArrayList<Cars> allCars = new ArrayList<>();
 
                 for(DataSnapshot carData : dataSnapshot.getChildren()){
 
@@ -214,6 +233,12 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void startMap(Cars cars) {
+        Intent intent = new Intent(Home.this, MapsActivity.class);
+        intent.putExtra("car", cars);
+        startActivity(intent);
     }
 
     @Override
