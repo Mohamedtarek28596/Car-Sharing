@@ -112,7 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         carDistance.setText(route.getDistanceText());
         carDuration.setText(route.getDurationText());
 
-        if (route.getDistanceValue() < 50) {
+        if (route.getDistanceValue() < 300) {
             unlock.setClickable(true);
             unlock.setEnabled(true);
             unlock.setBackgroundColor(getResources().getColor(R.color.colorPrimary));

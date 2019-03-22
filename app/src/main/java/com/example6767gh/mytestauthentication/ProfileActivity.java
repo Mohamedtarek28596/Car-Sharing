@@ -239,6 +239,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Utils.hideLoading();
+                            Toast.makeText(ProfileActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                             profileImageUrl = taskSnapshot.getDownloadUrl().toString(); // get the url as user informations
                         }
                     })
@@ -283,6 +284,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Toast.makeText(ProfileActivity.this, "Profile Destroy", Toast.LENGTH_SHORT).show();
         Utils.hideLoading();
     }
 }

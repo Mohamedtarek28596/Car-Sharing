@@ -68,30 +68,11 @@ public class Home extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.showLoading(Home.this);
         setContentView(R.layout.activity_home);
         v1 = findViewById(R.id.f1);
         v2 = findViewById(R.id.f2);
         v3 = findViewById(R.id.f3);
-        v1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startMap(allCars.get(0));
-            }
-        });
-
-        v2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startMap(allCars.get(1));
-            }
-        });
-
-        v3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startMap(allCars.get(2));
-            }
-        });
         img1 = v1.findViewById(R.id.ivProfilePic);
         img2 = v2.findViewById(R.id.ivProfilePic);
         img3 = v3.findViewById(R.id.ivProfilePic);
@@ -104,6 +85,8 @@ public class Home extends AppCompatActivity
         d1 = v1.findViewById(R.id.dist);
         d2 = v2.findViewById(R.id.dist);
         d3 = v3.findViewById(R.id.dist);
+
+        Toast.makeText(this, FirebaseAuth.getInstance().getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
 
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -138,73 +121,9 @@ public class Home extends AppCompatActivity
                 for(DataSnapshot carData : dataSnapshot.getChildren()){
 
                     Cars carsInformation = carData.getValue(Cars.class);
-
+                    //Toast.makeText(Home.this, carsInformation.getType(), Toast.LENGTH_SHORT).show();
                     allCars.add(carsInformation);
                 }
-
-                int firstmin = Integer.MAX_VALUE;
-                int secmin = Integer.MAX_VALUE;
-                int thirdmin = Integer.MAX_VALUE;
-                int firstminIndex = 0;
-                int secminIndex = 0;
-                int thirdminIndex = 0;
-                for (int i = 0; i < allCars.size(); i++)
-                {
-                /* Check if current element is less than
-                firstmin, then update first, second and
-                third */
-                double dist = distance(Double.valueOf(allCars.get(i).getLatitude()), myLat,Double.valueOf(allCars.get(i).getLongitude()), myLong,0.0,0.0);
-                    if (((int)dist) < firstmin)
-                    {
-                        thirdmin = secmin;
-                        secmin = firstmin;
-                        firstmin = (int)dist;
-                        firstminIndex = i;
-                    }
-
-                /* Check if current element is less than
-                secmin then update second and third */
-                    else if (((int)dist) < secmin)
-                    {
-                        thirdmin = secmin;
-                        secmin = ((int)dist);
-                        secminIndex = i;
-                    }
-
-                /* Check if current element is less than
-                then update third */
-                    else if (((int)dist) < thirdmin) {
-                        thirdmin = ((int) dist);
-                        thirdminIndex = i;
-                    }
-                }
-
-
-                StorageReference profileImageRef =
-                        FirebaseStorage.getInstance().getReference().child("cars/").child(String.valueOf(allCars.get(firstminIndex).getImage()));
-
-                String trial1 = allCars.get(firstminIndex).getImage();
-                String trial2 = allCars.get(secminIndex).getImage();
-                String trial3 = allCars.get(thirdminIndex).getImage();
-
-                Picasso.with(getApplication()).load(trial1)
-                        .into(img1);
-                tit1.setText( allCars.get(firstminIndex).getType());
-                c1.setText(allCars.get(firstminIndex).getColor());
-                d1.setText(allCars.get(firstminIndex).getNumber());
-
-
-                Picasso.with(getApplication()).load(trial2)
-                        .into(img2);
-                tit2.setText( allCars.get(secminIndex).getType());
-                c2.setText(allCars.get(secminIndex).getColor());
-                d2.setText(allCars.get(secminIndex).getNumber());
-
-                Picasso.with(getApplication()).load(trial3)
-                        .into(img3);
-                tit3.setText( allCars.get(thirdminIndex).getType());
-                c3.setText(allCars.get(thirdminIndex).getColor());
-                d3.setText(allCars.get(thirdminIndex).getNumber());
             }
 
 
@@ -256,21 +175,6 @@ public class Home extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -337,8 +241,101 @@ public class Home extends AppCompatActivity
         myLat = location.getLatitude();
         myLong = location.getLongitude();
         //Log.i("elec", myLat + " , " + myLong);
- //       Toast.makeText(this, myLat + " " + myLong, Toast.LENGTH_SHORT).show();
+        updateUI();
     }
+
+    private void updateUI() {
+        int firstmin = Integer.MAX_VALUE;
+        int secmin = Integer.MAX_VALUE;
+        int thirdmin = Integer.MAX_VALUE;
+        int firstminIndex = 0;
+        int secminIndex = 0;
+        int thirdminIndex = 0;
+        for (int i = 0; i < allCars.size(); i++)
+        {
+                /* Check if current element is less than
+                firstmin, then update first, second and
+                third */
+            //Toast.makeText(Home.this, "Calc :  " + myLat + " , " + myLong , Toast.LENGTH_SHORT).show();
+            double dist = distance(Double.valueOf(allCars.get(i).getLatitude()), myLat,Double.valueOf(allCars.get(i).getLongitude()), myLong,0.0,0.0);
+            if (((int)dist) < firstmin)
+            {
+                thirdmin = secmin;
+                secmin = firstmin;
+                firstmin = (int)dist;
+                firstminIndex = i;
+            }
+
+                /* Check if current element is less than
+                secmin then update second and third */
+            else if (((int)dist) < secmin)
+            {
+                thirdmin = secmin;
+                secmin = ((int)dist);
+                secminIndex = i;
+            }
+
+                /* Check if current element is less than
+                then update third */
+            else if (((int)dist) < thirdmin) {
+                thirdmin = ((int) dist);
+                thirdminIndex = i;
+            }
+        }
+
+        //Toast.makeText(Home.this, "After", Toast.LENGTH_SHORT).show();
+
+
+        if (allCars.size() != 0) {
+            String trial1 = allCars.get(firstminIndex).getImage();
+            String trial2 = allCars.get(secminIndex).getImage();
+            String trial3 = allCars.get(thirdminIndex).getImage();
+
+            Picasso.with(getApplication()).load(trial1)
+                    .into(img1);
+            tit1.setText(allCars.get(firstminIndex).getType());
+            c1.setText(allCars.get(firstminIndex).getColor());
+            d1.setText(allCars.get(firstminIndex).getNumber());
+
+
+            Picasso.with(getApplication()).load(trial2)
+                    .into(img2);
+            tit2.setText(allCars.get(secminIndex).getType());
+            c2.setText(allCars.get(secminIndex).getColor());
+            d2.setText(allCars.get(secminIndex).getNumber());
+
+            Picasso.with(getApplication()).load(trial3)
+                    .into(img3);
+            tit3.setText(allCars.get(thirdminIndex).getType());
+            c3.setText(allCars.get(thirdminIndex).getColor());
+            d3.setText(allCars.get(thirdminIndex).getNumber());
+
+            final int finalFirstminIndex = firstminIndex;
+            v1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startMap(allCars.get(finalFirstminIndex));
+                }
+            });
+
+            final int finalSecminIndex = secminIndex;
+            v2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startMap(allCars.get(finalSecminIndex));
+                }
+            });
+
+            final int finalThirdminIndex = thirdminIndex;
+            v3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startMap(allCars.get(finalThirdminIndex));
+                }
+            });
+            Utils.hideLoading();
+        }
+        }
 
     @Override
     public void onProviderDisabled(String provider) {

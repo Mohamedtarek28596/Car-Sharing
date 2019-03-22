@@ -11,14 +11,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
-    ArrayList<String>  mContact;
-    ArrayList<String>  mContact2;
-    ArrayList<String>  mContact3;
+    ArrayList<Trips>  trips;
 
-    public MainAdapter(ArrayList<String> contact,ArrayList<String> contact2,ArrayList<String> contact3) {
-        mContact =contact;
-        mContact2=contact2;
-        mContact3=contact3;
+    public MainAdapter(ArrayList<Trips> trips) {
+        this.trips = trips;
     }
 
 
@@ -30,16 +26,16 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder( MainAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.mStart.setText(mContact.get(position));
-        viewHolder.mEnd.setText(mContact2.get(position));
-        viewHolder.mTime.setText(mContact3.get(position));
+        viewHolder.mStart.setText(trips.get(position).getStart());
+        viewHolder.mEnd.setText(trips.get(position).getEnd());
+        viewHolder.mTime.setText(trips.get(position).getTime());
 
 
     }
 
     @Override
     public int getItemCount() {
-        return mContact.size() ;
+        return trips.size() ;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

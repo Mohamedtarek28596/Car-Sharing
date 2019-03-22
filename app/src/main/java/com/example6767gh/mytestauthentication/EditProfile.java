@@ -242,6 +242,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                         // check uplod successful or not
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(EditProfile.this, "Edit Prof", Toast.LENGTH_SHORT).show();
                             Utils.hideLoading();
                             profileImageUrl1 = taskSnapshot.getDownloadUrl().toString(); // get the url as user informations
 
@@ -295,6 +296,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Toast.makeText(EditProfile.this, "Edit Prof Destroy", Toast.LENGTH_SHORT).show();
         Utils.hideLoading();
     }
 

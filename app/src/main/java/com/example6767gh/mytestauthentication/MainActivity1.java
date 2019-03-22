@@ -79,7 +79,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        Utils.showLoading(this);
+        //Utils.showLoading(this);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
@@ -87,7 +87,8 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Utils.hideLoading();
+                //Utils.hideLoading();
+                Toast.makeText(MainActivity1.this, "Main A 11", Toast.LENGTH_SHORT).show();
                 if (task.isSuccessful()) {
                     finish();
 
@@ -95,6 +96,7 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
                     //**************************************       home
                     Intent intent = new Intent(MainActivity1.this, Home.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // to clear the stack and avoid any interfernce between activities
+                    finish();
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -121,7 +123,8 @@ public class MainActivity1 extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Utils.hideLoading();
+        Toast.makeText(MainActivity1.this, "Main A 11 Destroy", Toast.LENGTH_SHORT).show();
+        //Utils.hideLoading();
     }
 }
 

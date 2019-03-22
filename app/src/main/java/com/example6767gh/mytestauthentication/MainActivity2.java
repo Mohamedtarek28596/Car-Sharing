@@ -98,6 +98,7 @@ public class MainActivity2 extends AppCompatActivity  implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Utils.hideLoading();
+                Toast.makeText(MainActivity2.this, "Main A 2", Toast.LENGTH_SHORT).show();
                 if (task.isSuccessful()) {
 
                     FirebaseUser test = FirebaseAuth.getInstance().getCurrentUser();
@@ -142,6 +143,7 @@ public class MainActivity2 extends AppCompatActivity  implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Toast.makeText(MainActivity2.this, "Main A 2 Destroy", Toast.LENGTH_SHORT).show();
         Utils.hideLoading();
     }
 }

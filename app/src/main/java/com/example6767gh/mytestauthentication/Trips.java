@@ -7,6 +7,7 @@ public class Trips {
     private String start;
     private String end;
     private String time;
+    private String userID, carID;
 
 
 
@@ -14,10 +15,12 @@ public class Trips {
     }
 
 
-    public Trips(String start, String end, String time) {
+    public Trips(String start,String userID, String carID) {
         this.start = start;
-        this.end = end;
-        this.time = time;
+        this.end = "";
+        this.time = "";
+        this.userID = userID;
+        this.carID = carID;
     }
 
     public String getStart() {
@@ -44,4 +47,19 @@ public class Trips {
         this.time = time;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getCarID() {
+        return carID;
+    }
+
+    public void setCarID(String carID) {
+        this.carID = carID;
+    }
 }
