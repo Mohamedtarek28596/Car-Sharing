@@ -15,10 +15,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import static com.example6767gh.mytestauthentication.Constants.DEVICE_NAME;
 import static com.example6767gh.mytestauthentication.Constants.MESSAGE_DEVICE_NAME;
-import static com.example6767gh.mytestauthentication.Constants.MESSAGE_READ;
 import static com.example6767gh.mytestauthentication.Constants.MESSAGE_STATE_CHANGE;
 import static com.example6767gh.mytestauthentication.Constants.MESSAGE_TOAST;
 import static com.example6767gh.mytestauthentication.Constants.MESSAGE_WRITE;
@@ -29,10 +29,15 @@ public class BluetoothChatService {
     private static final boolean D = true;
 
     private static final String NAME_SECURE = "BluetoothChatSecure";
+    private static final String NAME_INSECURE = "BluetoothChatInsecure";
 
 
     private static final UUID MY_UUID_SECURE =
             UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+
+    private static final UUID MY_UUID_INSECURE =
+            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+
 
     private final BluetoothAdapter mAdapter;
     private final Handler mHandler;
@@ -57,7 +62,7 @@ public class BluetoothChatService {
         if (D) Log.d(TAG, "setState() " + mState + " -> " + state);
         mState = state;
 
-        mHandler.obtainMessage(MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+        mHandler.obtainMessage( MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
     }
 
     public synchronized int getState() {
@@ -75,7 +80,8 @@ public class BluetoothChatService {
         setState(STATE_LISTEN);
 
         if (mSecureAcceptThread == null) {
-            mSecureAcceptThread = new AcceptThread(true);
+            //ToDo:: Here
+            mSecureAcceptThread = new AcceptThread(false);
             mSecureAcceptThread.start();
         }
     }
@@ -182,6 +188,9 @@ public class BluetoothChatService {
                 if (secure) {
                     tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE,
                             MY_UUID_SECURE);
+                } else {
+                    tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME_INSECURE,
+                            MY_UUID_INSECURE);
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + "listen() failed", e);
@@ -254,6 +263,9 @@ public class BluetoothChatService {
                 if (secure) {
                     tmp = device.createRfcommSocketToServiceRecord(
                             MY_UUID_SECURE);
+                } else {
+                    tmp = device.createInsecureRfcommSocketToServiceRecord(
+                            MY_UUID_INSECURE);
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + "create() failed", e);
@@ -328,7 +340,7 @@ public class BluetoothChatService {
                 try {
                     bytes = mmInStream.read(buffer);
 
-                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
+                    mHandler.obtainMessage(2, bytes, -1, buffer)
                             .sendToTarget();
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);

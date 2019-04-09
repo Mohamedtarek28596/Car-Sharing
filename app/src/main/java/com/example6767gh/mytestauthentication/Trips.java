@@ -15,10 +15,10 @@ public class Trips {
     }
 
 
-    public Trips(String start,String userID, String carID) {
+    public Trips(String start,String end, String time,String userID, String carID) {
         this.start = start;
-        this.end = "";
-        this.time = "";
+        this.end = end;
+        this.time = time;
         this.userID = userID;
         this.carID = carID;
     }
